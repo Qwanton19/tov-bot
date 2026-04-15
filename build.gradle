@@ -1,0 +1,70 @@
+plugins {
+	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	// Add repositories to retrieve artifacts from in here.
+	// You should only use this when depending on other mods because
+	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
+	// for more information about repositories.
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+	// Fabric API
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+}
+
+processResources {
+	inputs.property "version", project.version
+	filteringCharset "UTF-8"
+
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+def targetJavaVersion = project.java_version.toInteger()
+
+java {
+	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+	// if it is present.
+	// In settings.gradle, Loom sets up the afterEvaluate{...} clause
+	// This is needed for Release builds to include sources
+	withSourcesJar()
+	
+	// If this is enabled, it will generate a Jar with all the dependencies
+	// and "main" jar will not be generated
+	// This is useful for mods that have lots of dependencies
+	// However, it requires JAR merging to work in the final mod
+	// See https://github.com/FabricMC/fabric-loom/issues/278 for more info
+	// withJavadocJar()
+	
+	sourceCompatibility = targetJavaVersion
+	targetCompatibility = targetJavaVersion
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	// Minecraft 1.20.4 (1.20.4) uses Java 17
+	it.options.release = targetJavaVersion
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}" }
+	}
+}

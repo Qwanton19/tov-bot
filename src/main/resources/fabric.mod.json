@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "tov-bot",
+	"version": "${version}",
+	"name": "TOV Bot",
+	"description": "A client-side mod that identifies loot locations based on F3+C clipboard direction",
+	"authors": [],
+	"contact": {},
+	"license": "MIT",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.tovbot.TovBotMod"
+		]
+	},
+	"mixins": [],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
