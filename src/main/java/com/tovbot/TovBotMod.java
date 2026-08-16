@@ -52,7 +52,14 @@ public class TovBotMod implements ClientModInitializer {
 			recentChatMessages.add(new ChatMessage(text, now));
 			recentChatMessages.removeIf(m -> now - m.timestamp > CHAT_HISTORY_TIMEOUT_MS);
 		});
-		
+
+		ClientReceiveMessageEvents.GAME.register((message, overlay) -> {
+			String text = message.getString();
+			long now = System.currentTimeMillis();
+			recentChatMessages.add(new ChatMessage(text, now));
+			recentChatMessages.removeIf(m -> now - m.timestamp > CHAT_HISTORY_TIMEOUT_MS);
+		});
+
 		ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> {
 			tovManager.clearThrows();
 			skrManager.clearThrows();
