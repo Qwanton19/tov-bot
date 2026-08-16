@@ -11,6 +11,7 @@ bin/
 # Compiled
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.log
 
 # OS

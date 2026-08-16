@@ -32,4 +32,4 @@ Throws are tracked separately for TOV and SKR, reset on server disconnect or aft
 
 ## Download
 
-Get the latest release for Minecraft 1.20.4 Fabric from the [Releases page](https://github.com/theq_/tov-bot/releases)
+Get the latest release for Minecraft 1.20.4 Fabric from the [Releases page](https://github.com/Qwanton19/tov-bot/releases)
